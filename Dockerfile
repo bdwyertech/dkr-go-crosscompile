@@ -1,6 +1,6 @@
 FROM golang:1.16-alpine
 
-RUN apk add git mingw-w64-gcc
+RUN apk add git gtk+3.0-dev libappindicator-dev mingw-w64-gcc
 
 ENV LD_LIBRARY_PATH=/osxcross/target/lib
 
