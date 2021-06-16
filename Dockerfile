@@ -17,7 +17,7 @@ LABEL org.opencontainers.image.title="bdwyertech/go-crosscompile" \
       org.label-schema.vcs-ref=$VCS_REF \
       org.label-schema.build-date=$BUILD_DATE
 
-RUN apk add bash clang curl git gtk+3.0-dev libappindicator-dev mingw-w64-gcc
+RUN apk add bash clang curl fts git gtk+3.0-dev libappindicator-dev mingw-w64-gcc
 
 ENV LD_LIBRARY_PATH=/osxcross/target/lib
 
