@@ -17,14 +17,14 @@ LABEL org.opencontainers.image.title="bdwyertech/go-crosscompile" \
       org.label-schema.vcs-ref=$VCS_REF \
       org.label-schema.build-date=$BUILD_DATE
 
-RUN apk add bash curl git gtk+3.0-dev libappindicator-dev mingw-w64-gcc
+RUN apk add bash clang curl git gtk+3.0-dev libappindicator-dev mingw-w64-gcc
 
 ENV LD_LIBRARY_PATH=/osxcross/target/lib
 
 RUN git clone https://github.com/tpoechtrager/osxcross.git /osxcross
 
 RUN curl -sfLo /osxcross/tarballs/MacOSX11.3.sdk.tar.xz https://github.com/bdwyertech/dkr-crosscompile/releases/download/macsdk/MacOSX11.3.sdk.tar.xz \
-    && apk add --no-cache --virtual .build-deps build-base bsd-compat-headers clang cmake libxml2-dev openssl-dev fts-dev python3 xz \
+    && apk add --no-cache --virtual .build-deps build-base bsd-compat-headers cmake libxml2-dev openssl-dev fts-dev python3 xz \
     && OSX_VERSION_MIN=10.10 UNATTENDED=1 /osxcross/build.sh \
     && rm -f /osxcross/tarballs/MacOSX11.3.sdk.tar.xz \
     && apk del .build-deps
