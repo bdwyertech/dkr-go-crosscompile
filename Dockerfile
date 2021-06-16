@@ -1,5 +1,22 @@
 FROM golang:1.16-alpine
 
+ARG BUILD_DATE
+ARG VCS_REF
+
+LABEL org.opencontainers.image.title="bdwyertech/go-crosscompile" \
+      org.opencontainers.image.description="For cross-compiling with CGO enabled" \
+      org.opencontainers.image.authors="Brian Dwyer <bdwyertech@github.com>" \
+      org.opencontainers.image.url="https://hub.docker.com/r/bdwyertech/go-crosscompile" \
+      org.opencontainers.image.source="https://github.com/bdwyertech/dkr-go-crosscompile.git" \
+      org.opencontainers.image.revision=$VCS_REF \
+      org.opencontainers.image.created=$BUILD_DATE \
+      org.label-schema.name="bdwyertech/go-crosscompile" \
+      org.label-schema.description="For cross-compiling with CGO enabled" \
+      org.label-schema.url="https://hub.docker.com/r/bdwyertech/go-crosscompile" \
+      org.label-schema.vcs-url="https://github.com/bdwyertech/docker-go-crosscompile.git"\
+      org.label-schema.vcs-ref=$VCS_REF \
+      org.label-schema.build-date=$BUILD_DATE
+
 RUN apk add git gtk+3.0-dev libappindicator-dev mingw-w64-gcc
 
 ENV LD_LIBRARY_PATH=/osxcross/target/lib
