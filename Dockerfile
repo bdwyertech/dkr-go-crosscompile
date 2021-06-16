@@ -21,7 +21,7 @@ RUN apk add bash clang curl fts git gcc gtk+3.0-dev libappindicator-dev mingw-w6
 
 ENV LD_LIBRARY_PATH=/osxcross/target/lib
 
-RUN git clone https://github.com/tpoechtrager/osxcross.git /osxcross
+RUN git clone --depth 1 https://github.com/tpoechtrager/osxcross.git /osxcross
 
 RUN curl -sfLo /osxcross/tarballs/MacOSX11.3.sdk.tar.xz https://github.com/bdwyertech/dkr-crosscompile/releases/download/macsdk/MacOSX11.3.sdk.tar.xz \
     && apk add --no-cache --virtual .build-deps build-base bsd-compat-headers cmake libxml2-dev openssl-dev fts-dev python3 xz \
