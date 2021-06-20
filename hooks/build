@@ -10,6 +10,6 @@ fi
 
 docker build --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \
              --build-arg VCS_REF=`git rev-parse --short HEAD` \
-             --build-arg GOLANG_VERSION=$GOLANG_VERSION
+             --build-arg GOLANG_VERSION=$GOLANG_VERSION \
              -f $DOCKERFILE_PATH \
              -t $IMAGE_NAME .
