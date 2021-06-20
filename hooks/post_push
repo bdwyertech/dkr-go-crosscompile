@@ -7,8 +7,8 @@ DATETAG="$(date -u +'%Y-%m-%d')--$(git rev-parse --short HEAD)"
 
 if [[ "$DOCKER_TAG" != 'latest' ]]; then
   docker tag "$IMAGE_NAME" "${DOCKER_REPO}:${DOCKER_TAG}-${DATETAG}"
+  docker push "${DOCKER_REPO}:${DOCKER_TAG}-${DATETAG}"
 else
   docker tag "$IMAGE_NAME" "${DOCKER_REPO}:${DATETAG}"
+  docker push "${DOCKER_REPO}:${DATETAG}"
 fi
-
-docker push "${DOCKER_REPO}:${DATETAG}"
