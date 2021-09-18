@@ -15,4 +15,9 @@ export CXX=o64-clang++
 export CGO_ENABLED=1
 export CC=x86_64-w64-mingw32-gcc
 export CXX=x86_64-w64-mingw32-g++
+
+# Linux - ARM64
+export CGO_ENABLED=1
+export CC=aarch64-linux-musl-gcc
+export CXX=aarch64-linux-musl-g++
 ```
