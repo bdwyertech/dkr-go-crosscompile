@@ -20,6 +20,8 @@ LABEL org.opencontainers.image.title="bdwyertech/go-crosscompile" \
 
 RUN apk add bash clang curl fts git gcc gtk+3.0-dev libappindicator-dev mingw-w64-gcc musl-dev
 
+RUN apk add libayatana-appindicator-dev --repository=https://dl-cdn.alpinelinux.org/alpine/edge/community
+
 ENV LD_LIBRARY_PATH=/osxcross/target/lib
 
 RUN git clone --depth 1 https://github.com/tpoechtrager/osxcross.git /osxcross
