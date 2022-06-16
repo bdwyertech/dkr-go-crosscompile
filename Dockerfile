@@ -33,7 +33,7 @@ RUN curl -sfLo /osxcross/tarballs/MacOSX11.3.sdk.tar.xz https://github.com/bdwye
     && apk del .build-deps
 
 # ARM64
-RUN curl -sfL "http://musl.cc/aarch64-linux-musl-cross.tgz" | tar zxf - -C /usr/ --strip-components=1
+RUN curl -sfL "https://musl.cc/aarch64-linux-musl-cross.tgz" | tar zxf - -C /usr/ --strip-components=1
 
 ENV PATH /osxcross/target/bin:$PATH
 
