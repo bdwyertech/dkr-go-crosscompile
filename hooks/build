@@ -2,7 +2,7 @@
 
 echo "Build hook running"
 
-export GOLANG_VERSION='1.16'
+export GOLANG_VERSION='1.18'
 
 if [[ "$DOCKER_TAG" =~ ^1.*|^2.* ]]; then
   export GOLANG_VERSION=$DOCKER_TAG
