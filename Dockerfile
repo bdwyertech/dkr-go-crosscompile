@@ -1,5 +1,5 @@
-ARG GOLANG_VERSION='1.19'
-FROM golang:$GOLANG_VERSION-alpine3.16
+ARG GOLANG_VERSION='1.20'
+FROM golang:$GOLANG_VERSION-alpine3.17
 
 ARG BUILD_DATE
 ARG VCS_REF
@@ -18,14 +18,16 @@ LABEL org.opencontainers.image.title="bdwyertech/go-crosscompile" \
     org.label-schema.vcs-ref=$VCS_REF \
     org.label-schema.build-date=$BUILD_DATE
 
-RUN apk add bash clang curl fts git gcc gtk+3.0-dev libappindicator-dev libayatana-appindicator-dev mingw-w64-gcc musl-dev
+RUN apk add bash clang curl git gcc gtk+3.0-dev libappindicator-dev libayatana-appindicator-dev mingw-w64-gcc musl-dev musl-fts
+
+# RUN apk add libayatana-appindicator-dev --repository=https://dl-cdn.alpinelinux.org/alpine/edge/community
 
 ENV LD_LIBRARY_PATH=/osxcross/target/lib
 
 RUN git clone --depth 1 https://github.com/tpoechtrager/osxcross.git /osxcross
 
 RUN curl -sfLo /osxcross/tarballs/MacOSX11.3.sdk.tar.xz https://github.com/bdwyertech/dkr-crosscompile/releases/download/macsdk/MacOSX11.3.sdk.tar.xz \
-    && apk add --no-cache --virtual .build-deps build-base bsd-compat-headers cmake libxml2-dev openssl-dev fts-dev python3 xz \
+    && apk add --no-cache --virtual .build-deps build-base bsd-compat-headers cmake libxml2-dev openssl-dev musl-fts-dev python3 xz \
     && OSX_VERSION_MIN=10.10 UNATTENDED=1 /osxcross/build.sh \
     && rm -f /osxcross/tarballs/MacOSX11.3.sdk.tar.xz \
     && apk del .build-deps
