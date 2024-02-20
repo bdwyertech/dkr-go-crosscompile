@@ -26,10 +26,10 @@ ENV LD_LIBRARY_PATH=/osxcross/target/lib
 
 RUN git clone --depth 1 https://github.com/tpoechtrager/osxcross.git /osxcross
 
-RUN curl -sfLo /osxcross/tarballs/MacOSX11.3.sdk.tar.xz https://github.com/bdwyertech/dkr-crosscompile/releases/download/macsdk/MacOSX11.3.sdk.tar.xz \
+RUN curl -sfLo /osxcross/tarballs/MacOSX11.1.sdk.tar.xz https://github.com/bdwyertech/dkr-crosscompile/releases/download/macsdk/MacOSX11.1.sdk.tar.xz \
     && apk add --no-cache --virtual .build-deps build-base bsd-compat-headers cmake libxml2-dev openssl-dev musl-fts-dev python3 xz \
-    && OSX_VERSION_MIN=10.10 UNATTENDED=1 /osxcross/build.sh \
-    && rm -f /osxcross/tarballs/MacOSX11.3.sdk.tar.xz \
+    && OSX_VERSION_MIN=10.14 UNATTENDED=1 /osxcross/build.sh \
+    && rm -f /osxcross/tarballs/MacOSX11.1.sdk.tar.xz \
     && apk del .build-deps
 
 # ARM64
