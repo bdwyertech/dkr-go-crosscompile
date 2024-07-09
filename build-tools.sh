@@ -5,3 +5,4 @@
 rm -rf osxcross
 git clone --depth 1 https://github.com/tpoechtrager/osxcross osxcross
 XZ_DEFAULTS="-T 0" osxcross/tools/gen_sdk_package_tools.sh
+sed -i '' 's|LIBCXXDIR3="usr/include/c++/v1"|LIBCXXDIR3="usr/include/c++/12.2.1"|' osxcross/tools/gen_sdk_package.sh
