@@ -26,7 +26,7 @@ RUN apk add bash clang curl git gcc gtk+3.0-dev libayatana-appindicator-dev ming
 RUN git clone --depth 1 https://github.com/tpoechtrager/osxcross.git /osxcross
 
 RUN curl -sfLo /osxcross/tarballs/MacOSX11.1.sdk.tar.xz https://github.com/bdwyertech/dkr-crosscompile/releases/download/macsdk/MacOSX11.1.sdk.tar.xz \
-    && apk add --no-cache --virtual .build-deps build-base bsd-compat-headers clang-dev cmake libxml2-dev openssl-dev musl-fts-dev python3 xz \
+    && apk add --no-cache --virtual .build-deps build-base bsd-compat-headers clang-dev cmake libxml2-dev libunwind-dev ocaml-dev openssl-dev musl-fts-dev python3 xz \
     && OSX_VERSION_MIN=10.14 UNATTENDED=1 /osxcross/build.sh \
     && rm -f /osxcross/tarballs/MacOSX11.1.sdk.tar.xz \
     && apk del .build-deps
