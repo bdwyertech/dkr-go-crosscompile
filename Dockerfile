@@ -18,7 +18,7 @@ LABEL org.opencontainers.image.title="bdwyertech/go-crosscompile" \
     org.label-schema.vcs-ref=$VCS_REF \
     org.label-schema.build-date=$BUILD_DATE
 
-RUN apk add bash clang curl git gcc gtk+3.0-dev libayatana-appindicator-dev mingw-w64-gcc musl-dev musl-fts
+RUN apk add bash clang curl git gcc gtk+3.0-dev libayatana-appindicator-dev libc++-dev mingw-w64-gcc musl-dev musl-fts
 
 # RUN apk add libayatana-appindicator-dev --repository=https://dl-cdn.alpinelinux.org/alpine/edge/community
 
