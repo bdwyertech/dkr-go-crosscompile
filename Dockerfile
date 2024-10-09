@@ -1,5 +1,23 @@
 ARG GOLANG_VERSION='1.23'
-FROM golang:$GOLANG_VERSION-alpine3.19
+FROM golang:$GOLANG_VERSION-alpine as go
+
+FROM alpine:3.18
+
+COPY --from=go /usr/local/go /usr/local/go
+
+ENV GOLANG_VERSION $GOLANG_VERSION
+
+# don't auto-upgrade the gotoolchain
+# https://github.com/docker-library/golang/issues/472
+ENV GOTOOLCHAIN=local
+
+ENV GOPATH /go
+ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
+
+COPY --from=go /go /go
+
+RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 1777 "$GOPATH"
+WORKDIR $GOPATH
 
 ARG BUILD_DATE
 ARG VCS_REF
@@ -21,7 +39,6 @@ LABEL org.opencontainers.image.title="bdwyertech/go-crosscompile" \
 RUN apk add bash clang curl git gcc gtk+3.0-dev libayatana-appindicator-dev libc++-dev mingw-w64-gcc musl-dev musl-fts
 
 # RUN apk add libayatana-appindicator-dev --repository=https://dl-cdn.alpinelinux.org/alpine/edge/community
-
 
 RUN git clone --depth 1 https://github.com/tpoechtrager/osxcross.git /osxcross
 
