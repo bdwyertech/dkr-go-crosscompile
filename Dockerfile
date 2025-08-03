@@ -1,5 +1,6 @@
 ARG GOLANG_VERSION='1.24'
-FROM golang:$GOLANG_VERSION-alpine as go
+FROM golang:$GOLANG_VERSION-alpine AS go
+FROM ghcr.io/bdwyertech/go-crosscompile:musl AS musl
 
 FROM alpine:3.18
 
@@ -49,9 +50,12 @@ RUN curl -sfLo /osxcross/tarballs/MacOSX11.1.sdk.tar.xz https://github.com/bdwye
     && apk del .build-deps
 
 # ARM64
-RUN curl -sfL "https://musl.cc/aarch64-linux-musl-cross.tgz" | tar zxf - -C /usr/ --strip-components=1
+COPY --from=musl /aarch64-linux-musl-cross.tgz /
+# RUN curl -sfL "https://musl.cc/aarch64-linux-musl-cross.tgz" | tar zxf - -C /usr/ --strip-components=1
+RUN tar -xzf /aarch64-linux-musl-cross.tgz -C /usr/ --strip-components=1 \
+    && rm /aarch64-linux-musl-cross.tgz
 
 ENV LD_LIBRARY_PATH=/osxcross/target/lib
-ENV PATH /osxcross/target/bin:$PATH
+ENV PATH=/osxcross/target/bin:$PATH
 
 WORKDIR /go
