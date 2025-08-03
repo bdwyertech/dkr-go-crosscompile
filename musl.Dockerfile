@@ -5,8 +5,7 @@ FROM alpine AS downloader
 # Install curl
 RUN apk add --no-cache curl
 
-# Download musl toolchain tarball from OCI registry artifact (replace URL as needed)
-RUN curl -L -o /aarch64-linux-musl-cross.tgz "https://musl.cc/aarch64-linux-musl-cross.tgz"
+RUN curl -sfL "https://musl.cc/aarch64-linux-musl-cross.tgz" | tar zxf - -C /usr/ --strip-components=1
 
 FROM scratch
-COPY --from=downloader /aarch64-linux-musl-cross.tgz /
+COPY --from=downloader /usr/aarch64-linux-musl /usr/aarch64-linux-musl
