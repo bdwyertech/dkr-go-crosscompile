@@ -65,7 +65,7 @@ jobs:
           labels: |
             org.opencontainers.image.title=${{ env.IMAGE_NAME }}
           flavor: |
-            latest=${{ matrix.tag == '1.24' }}
+            latest=${{ matrix.tag == '1.25' }}
           tags: |
             type=sha,enable=true,priority=100,prefix=${{ matrix.tag }}-${{ steps.params.outputs.date }}--,suffix=,format=short
       - name: Set up QEMU
