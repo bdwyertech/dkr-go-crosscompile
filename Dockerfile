@@ -47,7 +47,7 @@ RUN curl -sfLo /osxcross/tarballs/MacOSX11.1.sdk.tar.xz https://github.com/bdwye
     && apk add --no-cache --virtual .build-deps build-base bsd-compat-headers clang-dev cmake libxml2-dev openssl-dev musl-fts-dev python3 xz \
     && OSX_VERSION_MIN=10.14 UNATTENDED=1 /osxcross/build.sh \
     && rm -f /osxcross/tarballs/MacOSX11.1.sdk.tar.xz \
-    && rm -rf /osxcross/build
+    && rm -rf /osxcross/build \
     && apk del .build-deps
 
 # ARM64
