@@ -2,11 +2,11 @@ ARG GOLANG_VERSION='1.25'
 FROM golang:$GOLANG_VERSION-alpine AS go
 FROM ghcr.io/bdwyertech/go-crosscompile:musl AS musl
 
-FROM alpine:3.22
+FROM alpine:3.23
 
 COPY --from=go /usr/local/go /usr/local/go
 
-ENV GOLANG_VERSION $GOLANG_VERSION
+ENV GOLANG_VERSION=$GOLANG_VERSION
 
 # don't auto-upgrade the gotoolchain
 # https://github.com/docker-library/golang/issues/472
@@ -43,10 +43,13 @@ RUN apk add bash clang curl git gcc gtk+3.0-dev libayatana-appindicator-dev libc
 
 RUN git clone --depth 1 https://github.com/tpoechtrager/osxcross.git /osxcross
 
-RUN curl -sfLo /osxcross/tarballs/MacOSX11.1.sdk.tar.xz https://github.com/bdwyertech/dkr-crosscompile/releases/download/macsdk/MacOSX11.1.sdk.tar.xz \
+ARG OSX_VERSION_MIN=10.14
+ARG OSX_TAR='MacOSX11.1.sdk.tar.xz'
+
+RUN curl -sfLo /osxcross/tarballs/${OSX_TAR} https://github.com/bdwyertech/dkr-crosscompile/releases/download/macsdk/${OSX_TAR} \
     && apk add --no-cache --virtual .build-deps build-base bsd-compat-headers clang-dev cmake libxml2-dev openssl-dev musl-fts-dev python3 xz \
-    && OSX_VERSION_MIN=10.14 UNATTENDED=1 /osxcross/build.sh \
-    && rm -f /osxcross/tarballs/MacOSX11.1.sdk.tar.xz \
+    && OSX_VERSION_MIN=${OSX_VERSION_MIN} UNATTENDED=1 /osxcross/build.sh \
+    && rm -f /osxcross/tarballs/${OSX_TAR} \
     && rm -rf /osxcross/build \
     && apk del .build-deps
 
