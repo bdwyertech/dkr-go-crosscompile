@@ -10,6 +10,10 @@ on:
   push:
     branches: ['main']
 
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
 env:
   IMAGE_NAME: bdwyertech/go-crosscompile
 
@@ -72,6 +76,7 @@ jobs:
           flavor: |
             latest=${{ matrix.tag == '1.25' }}
           tags: |
+            type=raw,value=${{ matrix.tag }}
             type=sha,enable=true,priority=100,prefix=${{ matrix.tag }}-${{ steps.params.outputs.date }}--,suffix=,format=short
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -99,7 +104,7 @@ jobs:
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@0.33.1
         with:
-          image-ref: ghcr.io/${{ env.IMAGE_NAME }}:${{ steps.params.outputs.date }}--${{ steps.params.outputs.sha_short }}
+          image-ref: ghcr.io/${{ env.IMAGE_NAME }}:${{ matrix.tag }}-${{ steps.params.outputs.date }}--${{ steps.params.outputs.sha_short }}
           format: 'sarif'
           output: 'trivy-results.sarif'
           severity: 'CRITICAL,HIGH'
