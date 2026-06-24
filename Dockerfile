@@ -1,8 +1,8 @@
-ARG GOLANG_VERSION='1.25'
+ARG GOLANG_VERSION='1.26'
 FROM golang:$GOLANG_VERSION-alpine AS go
 FROM ghcr.io/bdwyertech/go-crosscompile:musl AS musl
 
-FROM alpine:3.23
+FROM alpine:3.24
 
 COPY --from=go /usr/local/go /usr/local/go
 
