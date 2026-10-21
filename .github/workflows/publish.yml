@@ -76,7 +76,7 @@ jobs:
           labels: |
             org.opencontainers.image.title=${{ env.IMAGE_NAME }}
           flavor: |
-            latest=${{ matrix.tag == '1.26' }}
+            latest=${{ matrix.tag == '1.27' }}
           tags: |
             type=raw,value=${{ matrix.tag }}
             type=sha,enable=true,priority=100,prefix=${{ matrix.tag }}-${{ steps.params.outputs.date }}--,suffix=,format=short
